@@ -1,12 +1,19 @@
 {{define "front"}}
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 <style>{{css}}</style>
 <main>
-<H1>POLITICS</H1>
-{{range .}}
-<article class="post">
-{{template "entry" .}}
-</article>
-{{end}}
+<H1>
+  POLITICS
+</H1>
+<ul>
+  {{range .}}
+    <li class="post">
+      {{template "entry" .}}
+      <div class="date">{{.Date.Format "02 Jan 2006. 15:04"}}</div> 
+    </li>
+  {{end}}
+</ul>
 </main>
 {{end}}

@@ -17,6 +17,17 @@
 
 :root {
     --font-family: "Public Sans", sans-serif;
+    --font-size:1.5rem;
+}
+
+@media (min-width: 45rem) {
+    :root {
+        --font-size:2.5rem;
+    }
+}
+
+h1 {
+    color:blue;
 }
 
 body {
@@ -28,12 +39,35 @@ body {
     padding:0;
 }
 
-.post {
-    font-size:3rem;
-    max-width:80rem;
+h1 {
+    font-size:1.75rem;
+    letter-spacing:.06rem;
+    margin:2rem 0 1rem;
 }
+
+.post {
+    margin-top:1rem;
+    font-size:var(--font-size);
+    max-width:70rem;
+}
+
+.post p {
+    margin:0 0 1rem;
+}
+
+.date {
+    font-style:italic;
+    margin-top:.5rem;
+    font-size:1rem;
+}
+
 
 main {
     margin:1rem .5rem;
 }
 
+@media (min-width: 45rem) {
+    main {
+        margin:1rem 2rem;
+    }
+}
