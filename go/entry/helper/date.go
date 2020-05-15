@@ -10,7 +10,7 @@ import (
 const Timestamp = "060102_150405"
 
 func ParseId(id int64) time.Time {
-	return time.Unix(id, 0)
+	return time.Unix(id, 0).UTC()
 }
 
 func ToTimestamp(id int64) string {

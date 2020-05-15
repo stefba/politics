@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 	"politics/go/entry"
-	"politics/go/entry/types/tree"
+	"politics/go/entry/helper"
 	"politics/go/server"
 	"strings"
 	"path/filepath"
@@ -14,7 +14,7 @@ import (
 )
 
 func files(s *server.Server, w http.ResponseWriter, r *http.Request) {
-	e, err := getEntry(s.Tree, r.URL.Path)
+	e, err := getEntry(s.Files, r.URL.Path)
 	if err != nil {
 		http.NotFound(w, r)
 		log.Println(err)
@@ -32,12 +32,21 @@ func serveSingleBlob(w http.ResponseWriter, r *http.Request, e entry.Entry) erro
 	return nil
 }
 
-func getEntry(t *tree.Tree, path string) (entry.Entry, error) {
+func getEntry(files entry.Entries, path string) (entry.Entry, error) {
 	hash, err := getHash(path)
 	if err != nil {
 		return nil, err
 	}
-	return t.LookupEntryHash(hash)
+	id, err := helper.ParseHash(hash)
+	if err != nil {
+		return nil, err
+	}
+	for _, e := range files {
+		if e.Id() == id {
+			return e, nil
+		}
+	}
+	return nil, fmt.Errorf("getEntry: Id %v (%v) not found.", id, helper.ToTimestamp(id))
 }
 
 func getHash(path string) (string, error) {
