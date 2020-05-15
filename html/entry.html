@@ -1,0 +1,38 @@
+
+{{define "entry" -}}
+
+    {{$type := .Type}}
+
+    {{if eq $type "text"}}
+            {{template "text" .}}
+    {{else if eq $type "image"}}
+            {{template "image" .}}
+    {{else if eq $type "set"}}
+            {{template "set" .}}
+    {{else if eq $type "audio"}}
+            {{template "audio" .}}
+    {{else if eq $type "video"}}
+            {{template "video" .}}
+    {{else -}}
+        Exception: Unknown entry type. {{.E}}
+    {{end}}
+
+{{end}}
+
+{{define "text"}}
+{{.Text "en"}}
+{{end}}
+
+
+{{define "audio"}}
+<audio src="{{.FilePath "en"}}" controls>
+</audio>
+{{end}}
+
+{{define "set"}}
+  {{range .Entries}}
+    {{template "entry" .}}
+  {{end}}
+{{end}}
+
+

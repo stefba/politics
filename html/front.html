@@ -1,0 +1,9 @@
+{{define "front"}}
+<!DOCTYPE html>
+<h1>Politics</h1>
+<main>
+{{range .}}
+{{template "entry" .}}
+{{end}}
+</main>
+{{end}}
