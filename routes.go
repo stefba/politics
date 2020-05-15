@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"politics/go/server"
@@ -12,10 +13,11 @@ func Router(s *server.Server) *mux.Router {
 	r := mux.NewRouter().StrictSlash(true)
 
 	if s.Flags.Reload {
-		r.Use(makeMiddleware(s, reload))
+		r.Use(makeMiddleware(s, reloadMiddle))
 	}
 
 	r.HandleFunc("/", makeHandler(s, front))
+	r.HandleFunc("/rl/", makeHandler(s, reload))
 	r.PathPrefix("/files/").HandlerFunc(makeHandler(s, files))
 	r.PathPrefix("/static/").HandlerFunc(makeHandler(s, static))
 
@@ -35,7 +37,7 @@ func makeMiddleware(s *server.Server, fn func(*server.Server, http.Handler) http
 	}
 }
 
-func reload(s *server.Server, next http.Handler) http.Handler {
+func reloadMiddle(s *server.Server, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if filepath.Ext(r.URL.Path) == "" {
 			err := s.Load()
@@ -47,4 +49,10 @@ func reload(s *server.Server, next http.Handler) http.Handler {
 	})
 }
 
-
+func reload(s *server.Server, w http.ResponseWriter, r *http.Request) {
+	err := s.Load()
+	if err != nil {
+		fmt.Fprint(w, err)
+	}
+	fmt.Fprint(w, "ok")
+}

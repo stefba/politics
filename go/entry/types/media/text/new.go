@@ -63,7 +63,11 @@ func NewText(path string, parent entry.Entry) (*Text, error) {
 
 func renderLangs(langs map[string]string) (map[string]string) {
 	for _, l := range []string{"de", "en"} {
-		text := string(bf.Run([]byte(langs[l]),bf.WithExtensions(bf.HardLineBreak)))
+		text := string(bf.Run(
+			[]byte(langs[l]),
+			bf.WithExtensions(bf.HardLineBreak),
+			bf.WithExtensions(bf.Footnotes),
+		))
 		langs[l] = text
 	}
 	return langs
