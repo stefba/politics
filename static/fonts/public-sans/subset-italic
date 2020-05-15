@@ -1,0 +1,8 @@
+#!/bin/sh
+pyftsubset Public-Sans-Italic-VF.ttf \
+    --gids-file=./gids \
+    --unicodes-file=./unicodes \
+    --layout-features="kern" \
+    --recommended-glyphs \
+    --verbose \
+    --output-file="Public-Sans-Italic-VF.subset.ttf"

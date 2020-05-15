@@ -79,4 +79,20 @@ func serveStatic(w http.ResponseWriter, r *http.Request, p string) {
 	http.ServeFile(w, r, p)
 }
 
+func static(s *server.Server, w http.ResponseWriter, r *http.Request) {
+	path, err := validPath(r.URL.Path)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	// Block folders.
+	if strings.HasSuffix(path, "/") {
+		http.NotFound(w, r)
+		return
+	}
+
+	serveStatic(w, r, s.Paths.Root+path)
+}
+
 

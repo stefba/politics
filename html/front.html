@@ -1,9 +1,12 @@
 {{define "front"}}
 <!DOCTYPE html>
-<h1>Politics</h1>
+<style>{{css}}</style>
 <main>
+<H1>POLITICS</H1>
 {{range .}}
+<article class="post">
 {{template "entry" .}}
+</article>
 {{end}}
 </main>
 {{end}}

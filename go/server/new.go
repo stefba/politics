@@ -1,6 +1,7 @@
 package server
 
 import (
+	"io/ioutil"
 	"politics/go/entry"
 	"politics/go/entry/types/set"
 	"politics/go/entry/types/tree"
@@ -14,10 +15,12 @@ type Server struct {
 	Files  entry.Entries
 	Recent entry.Entries
 	Flags  *flags
+	CSS    string
 }
 
 type paths struct {
 	Root, Data string
+	Static string
 }
 
 type flags struct {
@@ -36,6 +39,7 @@ func NewServer() *Server {
 	s.Paths = &paths{
 		Root: *path,
 		Data: p.Clean(*path + "/data"),
+		Static: p.Clean(*path + "/static"),
 	}
 	
 	s.Flags = &flags{
@@ -46,7 +50,20 @@ func NewServer() *Server {
 }
 
 func (s *Server) Load() error {
+	err := s.LoadCSS()
+	if err != nil {
+		return err
+	}
 	return s.LoadEntries()
+}
+
+func (s *Server) LoadCSS() error {
+	b, err := ioutil.ReadFile(s.Paths.Static+"/main.css")
+	if err != nil {
+		return err
+	}
+	s.CSS = string(b)
+	return nil
 }
 
 func (s *Server) LoadEntries() error {

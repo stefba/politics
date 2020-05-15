@@ -17,6 +17,7 @@ func Router(s *server.Server) *mux.Router {
 
 	r.HandleFunc("/", makeHandler(s, front))
 	r.PathPrefix("/files/").HandlerFunc(makeHandler(s, files))
+	r.PathPrefix("/static/").HandlerFunc(makeHandler(s, static))
 
 	return r
 }

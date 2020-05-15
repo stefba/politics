@@ -1,0 +1,39 @@
+
+@font-face {
+    font-family: "Public Sans";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display:fallback;
+    src: url("/static/fonts/Public-Sans-Roman-VF.woff2") format("woff2-variations");
+}
+
+@font-face {
+    font-family: "Public Sans";
+    font-style: italic;
+    font-weight: 100 900;
+    font-display:fallback;
+    src: url("/static/fonts/Public-Sans-Italic-VF.woff2") format("woff2-variations");
+}
+
+:root {
+    --font-family: "Public Sans", sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 2rem;
+    line-height:1.4;
+    margin:0;
+    padding:0;
+}
+
+.post {
+    font-size:3rem;
+    max-width:80rem;
+}
+
+main {
+    margin:1rem .5rem;
+}
+

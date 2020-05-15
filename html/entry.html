@@ -25,11 +25,6 @@
 
 
 {{define "audio"}}
-<pre>
-{{.Hash}}
-{{.FilePath "en"}}
-{{.Date.Format "060102_150405"}}
-</pre>
 <audio src="{{.FilePath "en"}}" controls>
 </audio>
 {{end}}
